@@ -7,9 +7,8 @@ import regionsData from '../mocks/regionsData.json';
 
 const Birds = ({ selectedRegion }) => {
   const { data, isLoading, error } = useFetchBirds();
-  const [selectedBirdUid, setSelectedBirdUid] = useState();
-
   // Se define con :  para que no se repita el valor de data, isLoading y error;
+  const [selectedBirdUid, setSelectedBirdUid] = useState();
   const { data: birdData, isLoading: isBirdLoading, error: birdError } = useFetchBirdData(selectedBirdUid);
   // Esto es para el Drawer
   const [opened, { open, close }] = useDisclosure(false);
@@ -56,16 +55,16 @@ const Birds = ({ selectedRegion }) => {
                   setSelectedBirdUid(bird.uid);
                   open();
                 }}>    
-                Ver más Información
+                Ver más Info
               </Button>
             </Card>
           ))}
         </SimpleGrid>
 
         <Drawer position="right" opened={opened} onClose={close} size="35%" title={<Text fw={500}>{"Información sobre el Ave"}</Text>}>
-          {isBirdLoading && <p>Cargando...</p>}
-          {birdError && <p>Ha ocurrido un error: {birdError.message}</p>}
-          {birdData && (
+        {isBirdLoading ? (<p>Cargando...</p>) : 
+        birdError ? ( <p>Ha ocurrido un error: {birdError.message}</p>) : (
+          birdData && (
             <Card shadow="xs" padding="lg" radius="md" withBorder>
               <Card.Section>
                 <Image
@@ -75,16 +74,17 @@ const Birds = ({ selectedRegion }) => {
 
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={600} size="xl">{birdData.name.spanish}</Text>
+                
                 <Badge color="pink">{birdData.species}</Badge>
               </Group>
 
               <Text fw={500}>Descripción: </Text>
-              <Text> {birdData.iucn.description ? birdData.iucn.description : "No hay una descripción"} </Text>
+              <Text> {birdData.iucn.description ? birdData.iucn.description:"No hay una descripción"} </Text>
 
               <Text fw={500}>Hábitat:</Text>
-              <Text>{birdData.habitat ? birdData.habitat : "No hay una información sobre su hábitat"}</Text>
+              <Text>{birdData.habitat ? birdData.habitat:"No hay una información sobre su hábitat"}</Text>
             </Card>
-          )}
+          ))}
         </Drawer>
       </>
     );
