@@ -28,18 +28,21 @@ const Map = ({ setSelectedRegion }) => {
 
   // Se retorna el Mapa con las regiones e información del GeoJson Regional
   return (
-    <MapContainer 
+    <div style={{borderRadius: '10px', overflow: 'hidden'}}>
+    <MapContainer
       center={[-41.55, -73.05]}
       zoom={6.5}
       scrollWheelZoom={true}
       doubleClickZoom={false}
-      className="map-container">
+      // zIndex es para que no se sobreponga el mapa sobre el header
+      style={{ height: '100%', width: '100%', zIndex: 0 }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <GeoJSON data={geoJsonData} onEachFeature={onEachFeature} />
     </MapContainer>
+    </div>
   );
 };
 
