@@ -8,7 +8,10 @@ import regionsData from '../mocks/regionsData.json';
 const Birds = ({ selectedRegion }) => {
   const { data, isLoading, error } = useFetchBirds();
   const [selectedBirdUid, setSelectedBirdUid] = useState();
+
+  // Se define con :  para que no se repita el valor de data, isLoading y error;
   const { data: birdData, isLoading: isBirdLoading, error: birdError } = useFetchBirdData(selectedBirdUid);
+  // Esto es para el Drawer
   const [opened, { open, close }] = useDisclosure(false);
 
   // sirve para obtener las regiones de las aves y compararlas con la región seleccionada
@@ -23,9 +26,10 @@ const Birds = ({ selectedRegion }) => {
     return <p>Ha ocurrido un error: {error.message}</p>;
   }
   
-  // filtra las aves que habitan en la región seleccionada
+  // Filtra las aves que habitan en la región seleccionada, si no hay aves en la para filtrar, retorna []
   const birds = data ? data.filter(bird => getBirdRegions(bird.uid).includes(selectedRegion)) : [];
 
+  // Si no se ha elegido ninguna regió muestra un mensaje default
   if (birds.length === 0) {
     return <Text>Seleccione una región para ver las aves que habitan en ella.</Text>;
   } else {
@@ -52,7 +56,7 @@ const Birds = ({ selectedRegion }) => {
                   setSelectedBirdUid(bird.uid);
                   open();
                 }}>    
-                Ver más Info
+                Ver más Información
               </Button>
             </Card>
           ))}
@@ -71,15 +75,14 @@ const Birds = ({ selectedRegion }) => {
 
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={600} size="xl">{birdData.name.spanish}</Text>
-                
                 <Badge color="pink">{birdData.species}</Badge>
               </Group>
 
               <Text fw={500}>Descripción: </Text>
-              <Text> {birdData.iucn.description ? birdData.iucn.description:"No hay una descripción"} </Text>
+              <Text> {birdData.iucn.description ? birdData.iucn.description : "No hay una descripción"} </Text>
 
               <Text fw={500}>Hábitat:</Text>
-              <Text>{birdData.habitat ? birdData.habitat:"No hay una información sobre su hábitat"}</Text>
+              <Text>{birdData.habitat ? birdData.habitat : "No hay una información sobre su hábitat"}</Text>
             </Card>
           )}
         </Drawer>

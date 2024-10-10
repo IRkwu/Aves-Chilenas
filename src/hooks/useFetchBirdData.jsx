@@ -6,6 +6,7 @@ const useFetchBirdData = (uid) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Si la uid no existe o aun no se define, no se hace nada, para evitar errores
     if (!uid) return;
 
     setIsLoading(true);

@@ -7,13 +7,14 @@ import Birds from './components/Birds';
 import icono from '/Iconos/Aves_Logo_TEXT.png';
 
 export default function App() {
-  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState();
 
   // appshell es para el header con mantine
+  // encodeURI es para pasar el nombre de la region a un formato que pueda ser leido por la url (por los espacios)
   return (
     <MantineProvider zIndex={1}>
       <BackgroundImage
-        src={`https://raw.githubusercontent.com/IRkwu/Aves-Chilenas/main/Imagenes_Regiones/${encodeURIComponent(selectedRegion)}.jpg`}
+        src={`https://raw.githubusercontent.com/IRkwu/Aves-Chilenas/main/Imagenes_Regiones/${encodeURI(selectedRegion)}.jpg`}
         >
       <AppShell 
         header={{ height: 75}}
